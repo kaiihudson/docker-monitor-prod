@@ -1,0 +1,5 @@
+#Set to local machine IP for blackExporter to read local hosts
+HOST_IP=[ip]
+#by default admin, password WILL be changed on first run
+GRAFANA_USER=admin 
+GRAFANA_PASS=admin
