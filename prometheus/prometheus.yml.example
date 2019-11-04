@@ -38,10 +38,7 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets: 
-        - http://monitor.hola.com
-        - http://wiki.hola.com
-        - http://wp.hola.com
-        - http://cloud.hola.com 
+        - http://website.com
     relabel_configs:
       - source_labels: [__address__]
         regex: (.*)(:80)?
