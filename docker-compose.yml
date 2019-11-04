@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.7'
 
 networks:
   monitor-net:
@@ -11,7 +11,6 @@ volumes:
     grafana_data: {}
 
 services:
-
   prometheus:
     image: prom/prometheus:v2.13.1
     labels:
@@ -45,10 +44,10 @@ services:
     expose: 
       - 9115
     extra_hosts:
-      - monitor.hola.com:192.168.1.185
-      - wiki.hola.com:192.168.1.185
-      - wp.hola.com:192.168.1.185
-      - cloud.hola.com:192.168.1.185
+      - monitor.hola.com:${HOST_IP}
+      - wiki.hola.com:${HOST_IP}
+      - wp.hola.com:${HOST_IP}
+      - cloud.hola.com:${HOST_IP}
     networks:
       - monitor-net
       - ingress
@@ -125,8 +124,8 @@ services:
       - ./grafana/setup.sh:/setup.sh
     entrypoint: /setup.sh
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASS}
       - GF_SERVER_ROOT_URL=https://monitor.hola.com
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
@@ -142,6 +141,7 @@ services:
       - traefik.docker.network=ingress
       - traefik.port=80
       - traefik.frontend.rule=Host:monitor.hola.com,prometheus.hola.com,alert.hola.com
+      - traefik.backend=monitor
       - org_label_schema.group=monitoring
     restart: unless-stopped
     volumes:
