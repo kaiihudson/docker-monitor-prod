@@ -44,10 +44,10 @@ services:
     expose: 
       - 9115
     extra_hosts:
-      - monitor.hola.com:${HOST_IP}
-      - wiki.hola.com:${HOST_IP}
-      - wp.hola.com:${HOST_IP}
-      - cloud.hola.com:${HOST_IP}
+      - monitor.${DOMAIN}:${HOST_IP}
+      - wiki.${DOMAIN}:${HOST_IP}
+      - wp.${DOMAIN}:${HOST_IP}
+      - cloud.${DOMAIN}:${HOST_IP}
     networks:
       - monitor-net
       - ingress
@@ -126,7 +126,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASS}
-      - GF_SERVER_ROOT_URL=https://monitor.hola.com
+      - GF_SERVER_ROOT_URL=https://monitor.${DOMAIN}
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
     expose:
@@ -140,7 +140,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=ingress
       - traefik.port=80
-      - traefik.frontend.rule=Host:monitor.hola.com,prometheus.hola.com,alert.hola.com
+      - traefik.frontend.rule=Host:monitor.${DOMAIN},prometheus.${DOMAIN},alert.${DOMAIN}
       - traefik.backend=monitor
       - org_label_schema.group=monitoring
     restart: unless-stopped
