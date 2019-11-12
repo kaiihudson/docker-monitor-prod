@@ -38,10 +38,10 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets: 
-        - http://monitor.hola.com
-        - http://wiki.hola.com
-        - http://wp.hola.com
-        - http://cloud.hola.com 
+        - http://monitor.kaii.com
+        - http://wiki.kaii.com
+        - http://wp.kaii.com
+        - http://cloud.kaii.com 
     relabel_configs:
       - source_labels: [__address__]
         regex: (.*)(:80)?
@@ -53,15 +53,6 @@ scrape_configs:
         regex: .*
         target_label: __address__
         replacement: blackbox:9115 
-#  - job_name: 'nginx'
-#    scrape_interval: 10s
-#    static_configs:
-#      - targets: ['nginxexporter:9113']
-
-#  - job_name: 'aspnetcore'
-#    scrape_interval: 10s
-#    static_configs:
-#      - targets: ['eventlog-proxy:5000', 'eventlog:5000']
             
 alerting:
   alertmanagers:
